@@ -213,6 +213,10 @@ class JdbcDurableStateStore[A](
       .mapConcat(identity)
   }
 
+  def ciao() = db.run(queries.getSequenceNextValueExpr())
+  def ciao2() = db.run(sql"""SELECT next_global_offset FROM durable_state_global_offset""".as[String])
+  def ciao3() = db.run(sql"""SELECT LAST_INSERT_ID()""".as[String])
+
   private[jdbc] def maxStateStoreOffset(): Future[Long] =
     db.run(queries.maxOffsetQuery.result)
 

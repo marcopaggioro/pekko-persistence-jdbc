@@ -94,10 +94,15 @@ abstract class DurableStateStoreSchemaPluginSpec(val config: Config, profile: Jd
     new SlickConfiguration(config.getConfig("slick")), "slick.db"
   )
 
-  override def beforeAll(): Unit =
+  override def beforeAll(): Unit = {
+    SchemaUtilsImpl.dropWithSlickButChangeSchema(
+      SchemaUtilsImpl.slickProfileToSchemaType(profile),
+      logger, db, defaultSchemaName, schemaName)
+
     SchemaUtilsImpl.createWithSlickButChangeSchema(
       SchemaUtilsImpl.slickProfileToSchemaType(profile),
       logger, db, defaultSchemaName, schemaName)
+  }
 
   override def afterAll(): Unit = {
     SchemaUtilsImpl.dropWithSlickButChangeSchema(
@@ -125,7 +130,14 @@ abstract class DurableStateStoreSchemaPluginSpec(val config: Config, profile: Jd
         .get(system)
         .durableStateStoreFor[JdbcDurableStateStore[String]](JdbcDurableStateStore.Identifier)
 
-      upsertManyForOnePersistenceId(store, "durable_state", "durable-t1", 1, 400).size shouldBe 400
+//      pprint.log(store.ciao().futureValue)
+//      pprint.log(store.ciao2().futureValue)
+//      pprint.log(store.ciao3().futureValue)
+//      pprint.log(store.maxStateStoreOffset().futureValue)
+      val upserts = upsertManyForOnePersistenceId(store, "durable_state", "durable-t1", 1, 400)
+      upserts.size shouldBe 400
+//      pprint.log(upserts.size)
+//      pprint.log(store.maxStateStoreOffset().futureValue)
 
       eventually {
         store.maxStateStoreOffset().futureValue shouldBe 400

@@ -18,16 +18,7 @@ import org.apache.pekko
 import pekko.annotation.InternalApi
 import pekko.persistence.jdbc.config.DurableStateTableConfiguration
 import pekko.persistence.jdbc.db.MariaDBProfile
-
-import slick.jdbc.{
-  H2Profile,
-  JdbcProfile,
-  MySQLProfile,
-  OracleProfile,
-  PostgresProfile,
-  SQLServerProfile,
-  SetParameter
-}
+import slick.jdbc.{DB2Profile, DerbyProfile, H2Profile, HsqldbProfile, JdbcProfile, MySQLProfile, OracleProfile, PostgresProfile, SQLServerProfile, SQLiteProfile, SetParameter}
 
 /**
  * INTERNAL API
@@ -101,7 +92,7 @@ import slick.jdbc.{
            SET #${durableStateTableCfg.columnNames.nextGlobalOffset} = LAST_INSERT_ID(#${durableStateTableCfg.columnNames.nextGlobalOffset} + 1)
            WHERE singleton = 0"""
 
-  private[jdbc] def getSequenceNextValueExpr() = profile match {
+  def getSequenceNextValueExpr() = profile match {
     case MySQLProfile =>
       replaceDbGlobalOffsetTable()
         .andThen(sequenceNextValUpdater.getSequenceNextValueExpr())

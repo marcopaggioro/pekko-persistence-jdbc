@@ -381,6 +381,7 @@ trait MysqlCleaner extends QueryTestSpec {
     withStatement { stmt =>
       stmt.execute("SET FOREIGN_KEY_CHECKS = 0")
       tables.foreach { name => stmt.executeUpdate(s"TRUNCATE $name") }
+      stmt.execute(s"SELECT LAST_INSERT_ID(0)")
       stmt.execute("SET FOREIGN_KEY_CHECKS = 1")
     }
   }

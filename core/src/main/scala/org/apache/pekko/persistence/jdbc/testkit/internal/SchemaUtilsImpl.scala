@@ -103,6 +103,7 @@ private[jdbc] object SchemaUtilsImpl {
     val (fileToLoad, separator) = dropScriptFor(schemaType, false)
     val script = SchemaUtilsImpl.fromClasspathAsString(fileToLoad)
       .replaceAll(s"$oldSchemaName.", s"$newSchemaName.")
+//    pprint.log(script)
     SchemaUtilsImpl.applyScriptWithSlick(script, separator, logger, db)
   }
 

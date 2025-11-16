@@ -35,6 +35,7 @@ object Dependencies {
     "com.typesafe.slick" %% "slick" % SlickVersion,
     "com.typesafe.slick" %% "slick-hikaricp" % SlickVersion,
     "ch.qos.logback" % "logback-classic" % LogbackVersion % Test,
+    "com.lihaoyi" %% "pprint" % "0.9.4",
     "org.scalatest" %% "scalatest" % ScalaTestVersion % Test) ++ JdbcDrivers.map(_ % Test)
 
   val Migration: Seq[ModuleID] = Seq(
