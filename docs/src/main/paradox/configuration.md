@@ -6,7 +6,7 @@ Configure `pekko-persistence`:
 
 - instruct Apache Pekko persistence to use the `jdbc-journal` plugin,
 - instruct Apache Pekko persistence to use the `jdbc-snapshot-store` plugin,
-- instruct Apache Pekko persistence to use the `jdbc-durable-state-store` plugin (Postgres and H2 only)
+- instruct Apache Pekko persistence to use the `jdbc-durable-state-store` plugin (No MySQL support)
 
 Configure `slick`:
 
@@ -46,9 +46,6 @@ Java
 :  @@snip[snip](/core/src/test/java/org/apache/pekko/persistence/jdbc/JavadslSnippets.java) { #create }
 
 A `dropIfExists` variant is also available.
-
-**Note**: `SchemaUtils` was introduced in version 5.0.0.
-
 
 ## Reference Configuration
 
